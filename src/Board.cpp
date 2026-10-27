@@ -14,9 +14,35 @@ Board::Board(size_t size)
 std::string Board::GetViewBoard() const
 {
 	std::string result;
-	for (const auto& row : m_ViewBoard)
+	const size_t OFFSET = 2;
+
+	// Space
+	size_t length = std::to_string(m_Size).size() + OFFSET;
+	for (size_t l = 0; l < length; l++)
 	{
-		for (const auto& c : row)
+		result += ' ';
+	}
+	// Row index
+	for (size_t col = 1; col <= m_Size; col++)
+	{
+		result += std::to_string(col);
+		result += ' ';
+	}
+	result += "\n\n";
+
+	// Rest of the board
+	for (size_t row = 0; row < m_Size; row++)
+	{
+		std::string rowNum = std::to_string(row + 1);
+		result += rowNum;
+		
+		// Space
+		for (size_t l = 0; l < length - rowNum.size(); l++)
+		{
+			result += ' ';
+		}
+
+		for (const auto& c : m_ViewBoard[row])
 		{
 			result += c;
 			result += ' ';

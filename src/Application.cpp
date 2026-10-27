@@ -30,7 +30,7 @@ void Application::Run(size_t boardSize, int mineChance)
 
 	board->Place(start);
 
-	while (board->IsAlive())
+	while (board->IsAlive() && !board->Won())
 	{
 		Printer::Print(offset, board->GetViewBoard());
 		
@@ -50,6 +50,14 @@ void Application::Run(size_t boardSize, int mineChance)
 		}
 	}
 
-	Printer::Print(offset, board->GetViewBoard());
-	Printer::Print(0, "----You lose!\n");
+	if (!board->IsAlive())
+	{
+		Printer::Print(offset, board->GetViewBoard());
+		Printer::Print(0, "----You lose!\n");
+	}
+	else
+	{
+		Printer::Print(offset, board->GetViewBoard());
+		Printer::Print(0, "----You win!\n");
+	}
 }
