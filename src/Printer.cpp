@@ -6,7 +6,8 @@
 std::stack<std::string> Printer::s_Texts;
 const std::unordered_set<std::string> Printer::s_FUNCTIONS = {
 	s_DIG_STR,
-	s_FLAG_STR
+	s_FLAG_STR,
+	s_UNFLAG_STR
 };
 
 void Printer::Print(size_t count, const std::string& text)
@@ -104,33 +105,33 @@ std::string Printer::ToLower(std::string text)
 	return text;
 }
 
-Point Printer::PromptPoint(const std::string& prompt)
+Point Printer::PromptPoint(const std::string& prompt) // TODO: Error still doesnt delete well
 {
 	size_t offset = 0;
 	Point point;
 	do
 	{
 		Print(offset, prompt);
-		offset++;
+		offset = 1;
 	} while ((point = GetPoint()) == POINT_ERROR);
 
-	std::cout << "\033[1A"; // Move up from the line after Enter (TODO: Warp this in a helper func its disgusting
+	std::cout << "\033[1A"; // Move up from the line after Enter (TODO: Warp this in a helper func its disgusting)
 	CursorUpBy(offset);
 
 	return point;
 }
 
-Input Printer::PromptInput(const std::string& prompt)
+Input Printer::PromptInput(const std::string& prompt) // TODO: Error still doesnt delete well
 {
 	size_t offset = 0;
 	Input input;
 	do
 	{
 		Print(offset, prompt);
-		offset++;
+		offset = 1;
 	} while ((input = ParseInput()) == INPUT_ERROR);
 
-	std::cout << "\033[1A"; // Move up from the line after Enter (TODO: Warp this in a helper func its disgusting
+	std::cout << "\033[1A"; // Move up from the line after Enter (TODO: Warp this in a helper func its disgusting)
 	CursorUpBy(offset);
 
 	return input;

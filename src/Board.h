@@ -21,6 +21,7 @@ private:
 
 	std::vector<std::vector<unsigned int>> m_Board;
 	std::vector<std::vector<unsigned char>> m_ViewBoard;
+	std::vector<std::vector<unsigned short>> m_Mines;
 	size_t m_Size;
 	bool m_IsAlive = true;
 
@@ -36,5 +37,7 @@ public:
 	bool GenerateBoard(Point start, int mineChance);
 	void Place(Point at);
 	void Flag(Point at);
+	void Unflag(Point at);
 	bool IsAlive() const;
+	bool Won() const;
 };

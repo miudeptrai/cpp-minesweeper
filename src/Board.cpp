@@ -7,6 +7,7 @@ Board::Board(size_t size)
 	: m_Size(size)
 	, m_Board(std::vector<std::vector<unsigned int>>(size, std::vector<unsigned int>(size)))
 	, m_ViewBoard(std::vector<std::vector<unsigned char>>(size, std::vector<unsigned char>(size, s_EMPTY_CHAR)))
+	, m_Mines(std::vector<std::vector<unsigned short>>(size, std::vector<unsigned short>(size, 0)))
 {
 }
 
@@ -59,7 +60,9 @@ bool Board::GenerateBoard(Point start, int mineChance)
 
 			int p = m_Rng.Randi(1, 100);
 			if (p <= mineChance)
+			{
 				m_Board[row][col] = s_MINE_NUM;
+			}
 		}
 	}
 
@@ -186,9 +189,39 @@ void Board::Flag(Point at)
 		return;
 
 	m_ViewBoard[at.row][at.col] = s_FLAG_CHAR;
+	if (m_Board[at.row][at.col] == s_MINE_NUM)
+	{
+		m_Mines[at.row][at.col] = 1;
+	}
+}
+
+void Board::Unflag(Point at)
+{
+	if (at.row < 0 || at.row >= m_Size || at.col < 0 || at.col >= m_Size)
+		return;
+
+	m_ViewBoard[at.row][at.col] = s_EMPTY_CHAR;
+	if (m_Board[at.row][at.col] == s_MINE_NUM)
+	{
+		m_Mines[at.row][at.col] = 0;
+	}
 }
 
 bool Board::IsAlive() const
 {
 	return m_IsAlive;
+}
+
+bool Board::Won() const
+{
+	for (size_t row = 0; row < m_Size; row++)
+	{
+		for (size_t col = 0; col < m_Size; col++)
+		{
+			if ((m_Mines[row][col] == 0) && (m_Board[row][col] == s_MINE_NUM))
+				return false;
+		}
+	}
+
+	return true;
 }

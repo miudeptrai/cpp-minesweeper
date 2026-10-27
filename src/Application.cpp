@@ -16,6 +16,7 @@ void Application::Run(size_t boardSize, int mineChance)
 	Printer::Print(0, "---- miu's C++ Minesweeper\n");
 	Printer::Print(0, "1. Type 'dig row col' to dig.\n");
 	Printer::Print(0, "2. Type 'flag row col' to flag.\n");
+	Printer::Print(0, "3. Type 'unflag row col' to unflag.\n");
 
 	size_t offset = 0;
 
@@ -42,6 +43,10 @@ void Application::Run(size_t boardSize, int mineChance)
 		else if (input.function == Printer::s_FLAG_STR)
 		{
 			board->Flag(input.point);
+		}
+		else if (input.function == Printer::s_UNFLAG_STR)
+		{
+			board->Unflag(input.point);
 		}
 	}
 

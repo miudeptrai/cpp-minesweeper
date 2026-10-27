@@ -19,6 +19,7 @@ private:
 public:
 	static constexpr const char* s_DIG_STR = "dig";
 	static constexpr const char* s_FLAG_STR = "flag";
+	static constexpr const char* s_UNFLAG_STR = "unflag";
 
 	static void Print(size_t count, const std::string& text);
 	static void CursorUpBy(size_t count);
